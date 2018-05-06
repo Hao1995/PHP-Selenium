@@ -82,4 +82,37 @@ class EnChuKongController extends Controller
     {
         //
     }
+
+    // Selenium
+
+    public function startSeleniumServer(Request $request){
+
+        // $cmd = 'start cmd.exe @cmd /k "ping google.com"';
+        // $cmd = 'start cmd.exe @cmd /k "cd .. & java -jar selenium-server-standalone-3.11.0.jar"';
+
+        //php_uname() >> Windows NT LAPTOP-GJE59E32 10.0 build 16299 (Windows 10) i586
+        
+        // if (substr(php_uname(), 0, 7) == "Windows"){ 
+        // return "Exec First";
+        //     pclose(popen("start /B ". $cmd, "r"));  
+        // } 
+        // else { 
+            // exec($cmd . " > /dev/null &");   
+        //     return "This device is not Windows";
+        // } 
+
+        
+        // exec($cmd);
+        // exec('start cmd.exe @cmd /k "cd .. & php MultipleThread.php"');
+        // exec('startSeleniumServer.bat');
+        // exec('start cmd.exe @cmd /k "cd .. & startSeleniumServer.bat"');
+        // exec('start /min cmd.exe @cmd /k "cd .. & startSeleniumServer.bat"');
+        // $data = exec('java -jar selenium-server-standalone-3.11.0.jar');
+
+        $fp= popen('start /min cmd.exe @cmd /k "cd .. & java -jar selenium-server-standalone-3.11.0.jar"','r');
+        pclose($fp);
+
+        //Next ===> Already start selenium server. We have to checkt the status of port 4444
+        return "Success";
+    }
 }
