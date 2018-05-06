@@ -89,6 +89,9 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+                <div class="links">
+                    <a href="{{route('EnChuKong.index')}}">En Chu Kong</a>
+                </div>
             </div>
         </div>
     </body>

@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return view('EnChuKong.show');
+    return view('welcome');
 });
+
+Route::resource('/EnChuKong', 'EnChuKongController');
