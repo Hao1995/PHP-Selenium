@@ -5,7 +5,9 @@
     <title>En Chu Kong - Selenium</title>
 
     {{-- "asset" point to "public" folder --}}
-    <link rel="stylesheet" href="{{asset('css/app.css')}}"> {{-- Bootstrap CSS --}}
+    <link rel="stylesheet" href="{{asset('css/app.css')}}"> 
+    <link rel="stylesheet" href="{{asset('css/libs.css')}}"> 
+    {{-- Bootstrap CSS --}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous"> @yield('styles')
 </head>
@@ -54,6 +56,7 @@
 
     {{-- "asset" point to "public" folder --}}
     <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/libs.js')}}"></script>
     {{-- Bootstrap JS --}}
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
