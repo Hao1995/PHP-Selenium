@@ -14,7 +14,18 @@ class EnChuKongController extends Controller
     public function index()
     {
         //
-        return view('EnChuKong.index');
+        $domain = 'localhost';
+        $starttime = microtime(true);
+        $file      = @fsockopen($domain, 4444, $errno, $errstr, 10);
+        $stoptime  = microtime(true);
+        $status    = false; //App is down
+
+        if ($file) { 
+            fclose($file);
+            $status = true; //APP is up
+        }
+
+        return view('EnChuKong.index', compact('status'));
     }
 
     /**
@@ -109,10 +120,11 @@ class EnChuKongController extends Controller
         // exec('start /min cmd.exe @cmd /k "cd .. & startSeleniumServer.bat"');
         // $data = exec('java -jar selenium-server-standalone-3.11.0.jar');
 
-        $fp= popen('start /min cmd.exe @cmd /k "cd .. & java -jar selenium-server-standalone-3.11.0.jar"','r');
+        $fp= popen('start /min cmd.exe @cmd /k "title SeleniumServer & cd .. & java -jar selenium-server-standalone-3.11.0.jar"','r');
         pclose($fp);
 
         //Next ===> Already start selenium server. We have to checkt the status of port 4444
-        return "Success";
+        // return view('EnChuKong.index', compact('status'));
+        return redirect()->back();
     }
 }

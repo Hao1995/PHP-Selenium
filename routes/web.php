@@ -18,3 +18,26 @@ Route::get('/', function () {
 Route::resource('/EnChuKong', 'EnChuKongController');
 
 Route::post('/EnChuKong/selenium/server', 'EnChuKongController@startSeleniumServer');
+
+Route::get('/test', function(){
+
+    $cmdOutput = exec('chcp 65001 & taskkill /IM cmd.exe /fi "WINDOWTITLE eq SeleniumServer*"');
+    $splitString = explode(":", $cmdOutput);
+
+    $status = $splitString[0];
+
+    if ($status == 'SUCCESS'){
+        return $status;
+    }
+    
+    $cmdOutput = exec('chcp 65001 & taskkill /IM cmd.exe /fi "WINDOWTITLE eq 選取 SeleniumServer*"');
+    $splitString = explode(":", $cmdOutput);
+
+    $status = $splitString[0];
+
+    if ($status == 'SUCCESS'){
+        return $status;
+    }
+
+    return "[ERROR]:" . $cmdOutput;
+});
