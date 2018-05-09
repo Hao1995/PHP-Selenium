@@ -98,33 +98,34 @@ class EnChuKongController extends Controller
 
     public function startSeleniumServer(Request $request){
 
-        // $cmd = 'start cmd.exe @cmd /k "ping google.com"';
-        // $cmd = 'start cmd.exe @cmd /k "cd .. & java -jar selenium-server-standalone-3.11.0.jar"';
-
-        //php_uname() >> Windows NT LAPTOP-GJE59E32 10.0 build 16299 (Windows 10) i586
-        
-        // if (substr(php_uname(), 0, 7) == "Windows"){ 
-        // return "Exec First";
-        //     pclose(popen("start /B ". $cmd, "r"));  
-        // } 
-        // else { 
-            // exec($cmd . " > /dev/null &");   
-        //     return "This device is not Windows";
-        // } 
-
-        
-        // exec($cmd);
-        // exec('start cmd.exe @cmd /k "cd .. & php MultipleThread.php"');
-        // exec('startSeleniumServer.bat');
-        // exec('start cmd.exe @cmd /k "cd .. & startSeleniumServer.bat"');
-        // exec('start /min cmd.exe @cmd /k "cd .. & startSeleniumServer.bat"');
-        // $data = exec('java -jar selenium-server-standalone-3.11.0.jar');
-
-        $fp= popen('start /min cmd.exe @cmd /k "title SeleniumServer & cd .. & java -jar selenium-server-standalone-3.11.0.jar"','r');
+        $cmd = 'start /min cmd.exe @cmd /k "title SeleniumServer & cd .. & java -jar selenium-server-standalone-3.11.0.jar"';
+        $fp= popen($cmd,'r');
         pclose($fp);
 
-        //Next ===> Already start selenium server. We have to checkt the status of port 4444
-        // return view('EnChuKong.index', compact('status'));
+        return redirect()->back();
+    }
+
+    public function stopSeleniumServer(Request $request){
+
+        $cmdOutput = exec('chcp 65001 & taskkill /IM cmd.exe /fi "WINDOWTITLE eq SeleniumServer*"');
+        $splitString = explode(":", $cmdOutput);
+
+        $status = $splitString[0];
+
+        if ($status == 'SUCCESS'){
+            return redirect()->back();
+        }
+        
+        $cmdOutput = exec('chcp 65001 & taskkill /IM cmd.exe /fi "WINDOWTITLE eq 選取 SeleniumServer*"');
+        $splitString = explode(":", $cmdOutput);
+
+        $status = $splitString[0];
+
+        if ($status == 'SUCCESS'){
+            return redirect()->back();
+        }
+
+        // return "[ERROR]:" . $cmdOutput;
         return redirect()->back();
     }
 }

@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::resource('/EnChuKong', 'EnChuKongController');
 
 Route::post('/EnChuKong/selenium/server', 'EnChuKongController@startSeleniumServer');
+Route::delete('/EnChuKong/selenium/server', 'EnChuKongController@stopSeleniumServer');
 
 Route::get('/test', function(){
 
