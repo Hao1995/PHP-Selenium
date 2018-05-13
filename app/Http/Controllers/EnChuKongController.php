@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Facebook\FacebookSelenium;
+use App\Facebook\Test;
 
 class EnChuKongController extends Controller
 {
@@ -125,7 +127,12 @@ class EnChuKongController extends Controller
             return redirect()->back();
         }
 
-        // return "[ERROR]:" . $cmdOutput;
         return redirect()->back();
+    }
+
+    public function webdriver(Request $request){
+
+        $haoWebdriver = new FacebookSelenium();
+        return $haoWebdriver->index();
     }
 }

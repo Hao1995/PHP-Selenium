@@ -1,5 +1,9 @@
 <?php
 
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Illuminate\Support\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,25 +24,15 @@ Route::resource('/EnChuKong', 'EnChuKongController');
 Route::post('/EnChuKong/selenium/server', 'EnChuKongController@startSeleniumServer');
 Route::delete('/EnChuKong/selenium/server', 'EnChuKongController@stopSeleniumServer');
 
-Route::get('/test', function(){
+Route::get('/test', 'EnChuKongController@webdriver');
 
-    $cmdOutput = exec('chcp 65001 & taskkill /IM cmd.exe /fi "WINDOWTITLE eq SeleniumServer*"');
-    $splitString = explode(":", $cmdOutput);
+Route::get('/mail', function(){
+    $data = [
+        'title' => 'Hi student ....',
+        'content' => 'There are content of email'
+    ];
 
-    $status = $splitString[0];
-
-    if ($status == 'SUCCESS'){
-        return $status;
-    }
-    
-    $cmdOutput = exec('chcp 65001 & taskkill /IM cmd.exe /fi "WINDOWTITLE eq 選取 SeleniumServer*"');
-    $splitString = explode(":", $cmdOutput);
-
-    $status = $splitString[0];
-
-    if ($status == 'SUCCESS'){
-        return $status;
-    }
-
-    return "[ERROR]:" . $cmdOutput;
+    Mail::send('emails.test', $data, function($message){
+        $message->to('y26704325@gmail.com', 'Harry')->subject('Hello Student');
+    });
 });
