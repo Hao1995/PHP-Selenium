@@ -29,7 +29,7 @@ class EnChuKongController extends Controller
         }
 
         //Get EnChuKong Data
-        $data = EnChuKong::orderBy('created_at', 'desc')->get();
+        $data = EnChuKong::orderBy('created_at', 'desc')->limit(20)->get();
 
         return view('EnChuKong.index', compact('status', 'data'));
     }

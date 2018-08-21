@@ -89,6 +89,7 @@ class FacebookSelenium
                 $errorMessage = $errorMessage . '   ===   ' .'Error when forech '. $i . ' element : No Such Element';
                 $driver->quit();
             }
+            //catch timeout
         }
 
         $driver->quit();
