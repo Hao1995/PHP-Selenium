@@ -24,7 +24,8 @@ Route::resource('/EnChuKong', 'EnChuKongController');
 Route::post('/EnChuKong/selenium/server', 'EnChuKongController@startSeleniumServer');
 Route::delete('/EnChuKong/selenium/server', 'EnChuKongController@stopSeleniumServer');
 
-Route::get('/crawler', 'EnChuKongController@webdriver');
+Route::get('/crawler', 'EnChuKongController@webdriver')->name('crawler');
+
 
 Route::get('/test', function(){
     return $_ENV['MAIL_TARGET'];

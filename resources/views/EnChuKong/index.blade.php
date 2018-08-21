@@ -6,7 +6,7 @@
     <table class="table table-striped">
         <thead>
           <tr>
-            <th colspan="3" class="text-center">Selenium Server</th>
+            <th colspan="2" class="text-center">Selenium Server</th>
           </tr>
         </thead>
         <tbody>
@@ -19,18 +19,19 @@
                 @endif
             </th>
             <td>
-                {!! Form::open(['method'=>'POST', 'action'=>'EnChuKongController@startSeleniumServer']) !!}
-                    <div class="form-group float-right">
-                        {!! Form::submit('Start', ['class'=>'btn btn-primary']) !!}
-                    </div>
-                {!! Form::close() !!}
-            </td>
-            <td class="text-center">
-                {!! Form::open(['method'=>'DELETE', 'action'=>'EnChuKongController@stopSeleniumServer']) !!}
-                    <div class="form-group float-right">
-                        {!! Form::submit('Stop', ['class'=>'btn btn-danger']) !!}
-                    </div>
-                {!! Form::close() !!}    
+                @if ($status)
+                    {!! Form::open(['method'=>'DELETE', 'action'=>'EnChuKongController@stopSeleniumServer']) !!}
+                        <div class="form-group">
+                            {!! Form::submit('Stop', ['class'=>'btn btn-danger']) !!}
+                        </div>
+                    {!! Form::close() !!}   
+                @else
+                    {!! Form::open(['method'=>'POST', 'action'=>'EnChuKongController@startSeleniumServer']) !!}
+                        <div class="form-group">
+                            {!! Form::submit('Start', ['class'=>'btn btn-primary']) !!}
+                        </div>
+                    {!! Form::close() !!}
+                @endif
             </td>
           </tr>
         </tbody>
@@ -44,6 +45,9 @@
                 <th colspan="6" class="text-center">
                     Status Data
                     <a class="btn btn-info float-right" href="{{route('EnChuKong.index')}}">Refresh</a>
+                    @if ($status)
+                        <a class="btn btn-info float-right" href="{{route('crawler')}}" target="_blank">Fetch</a>
+                    @endif
                 </th>
             </tr>
         </thead>
