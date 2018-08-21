@@ -15,8 +15,9 @@ class CreateEnChuKongsTable extends Migration
     {
         Schema::create('en_chu_kongs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('date');
+            $table->date('date');
             $table->string('week');
+            $table->string('doctor');
             $table->string('status');
             $table->timestamps();
         });

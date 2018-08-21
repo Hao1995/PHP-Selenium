@@ -26,18 +26,7 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
-        // $schedule->call(function() {
-        //     EnChuKong::findOrFail(31)->delete();
-        // })->everyMinute();
-
-        // $schedule->call(function(){
-        //     EnChuKong::create([
-        //         'date' =>  'testdate',
-        //         'status' => 'test status',
-        //     ])->save();
-        // })->everyMinute();
-        
+    {     
         $schedule->call(function(){
             $haoWebdriver = new FacebookSelenium();
             $haoWebdriver->index();

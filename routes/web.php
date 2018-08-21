@@ -24,15 +24,8 @@ Route::resource('/EnChuKong', 'EnChuKongController');
 Route::post('/EnChuKong/selenium/server', 'EnChuKongController@startSeleniumServer');
 Route::delete('/EnChuKong/selenium/server', 'EnChuKongController@stopSeleniumServer');
 
-Route::get('/test', 'EnChuKongController@webdriver');
+Route::get('/crawler', 'EnChuKongController@webdriver');
 
-Route::get('/mail', function(){
-    $data = [
-        'title' => 'Hi student ....',
-        'content' => 'There are content of email'
-    ];
-
-    Mail::send('emails.test', $data, function($message){
-        $message->to('y26704325@gmail.com', 'Harry')->subject('Hello Student');
-    });
+Route::get('/test', function(){
+    return $_ENV['MAIL_TARGET'];
 });

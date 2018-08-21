@@ -8,6 +8,6 @@ class EnChuKong extends Model
 {
     //
     protected $fillable = [
-        'date', 'status'
+        'date', 'week', 'doctor', 'status'
     ];
 }

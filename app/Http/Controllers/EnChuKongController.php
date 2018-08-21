@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Facebook\FacebookSelenium;
-use App\Facebook\Test;
+use App\EnChuKong;
 
 class EnChuKongController extends Controller
 {
@@ -15,7 +16,7 @@ class EnChuKongController extends Controller
      */
     public function index()
     {
-        //
+        //Check Server Status
         $domain = 'localhost';
         $starttime = microtime(true);
         $file      = @fsockopen($domain, 4444, $errno, $errstr, 10);
@@ -27,7 +28,10 @@ class EnChuKongController extends Controller
             $status = true; //APP is up
         }
 
-        return view('EnChuKong.index', compact('status'));
+        //Get EnChuKong Data
+        $data = EnChuKong::orderBy('created_at', 'desc')->get();
+
+        return view('EnChuKong.index', compact('status', 'data'));
     }
 
     /**
@@ -131,7 +135,6 @@ class EnChuKongController extends Controller
     }
 
     public function webdriver(Request $request){
-
         $haoWebdriver = new FacebookSelenium();
         return $haoWebdriver->index();
     }
