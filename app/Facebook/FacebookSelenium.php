@@ -32,7 +32,7 @@ class FacebookSelenium
             return "Can't get " . $url;
         }
 
-        $doctorName = '江怡慧';
+        $doctorName = '江怡慧 (00015)';
         try {
             $driver->wait($waitSeconds)->until(
                 WebDriverExpectedCondition::visibilityOfElementLocated(
@@ -50,7 +50,7 @@ class FacebookSelenium
 
         for ($i = 0; $i < count($elements); $i++) {
             $elements = $driver->findElements(WebDriverBy::partialLinkText($doctorName));
-            $elements[$i]->sendKeys($doctorName)->click();
+            $elements[$i]->click();
             
             try {
                 $element = $driver->findElement(WebDriverBy::cssSelector('tr > td > table > tbody > tr:last-child > td:nth-child(1) > span'));

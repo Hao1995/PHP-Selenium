@@ -4,7 +4,20 @@ I make this project in order to help my mom to automatically make an appointment
 But have not finished automation.
 Just send an email to me when found to be available for appointment.
 
+## Configuration
+* Xampp
+    * PHP = 7.1.11
+    * MariaDB = 10.1.28
+* Selenium Server = 3.9.1 >> [LINK](http://selenium-release.storage.googleapis.com/index.html?path=3.9/)
+* Chrome Driver = 2.4.5 >> [LINK](https://chromedriver.storage.googleapis.com/index.html?path=2.45/)
+* JAVA = 8u201 >> [LINK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+(I have been tried 11.0.2LTS. That could not work.)
+
 ## Get Started
+You should preinstalled "Selenium Server", "Xampp" and "Chrome Driver".  
+**Then place "Selenium Server" and "Chrome Driver" at your root of the project.**  
+(Remember edit the **selenium-server name** at "app/Http/Controller/EnChuKongController.php". Around line 107.)
+
 (use cmd)
 ```
 git clone https://github.com/Hao1995/PHP-Selenium.git
@@ -48,3 +61,6 @@ F:\xampp\php\php.exe "F:\xampp\htdocs\selenium_Laravel56\artisan" schedule:run
 
 ## Demo
 ![Demo](http://drive.google.com/uc?export=view&id=1T7c-PQt2QAUjSDyoa_PzaVmatmCxjdeO "Demo")  
+
+## References
+* facebook/php-webdriver >> [LINK](https://github.com/facebook/php-webdriver)

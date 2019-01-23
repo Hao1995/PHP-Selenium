@@ -104,7 +104,7 @@ class EnChuKongController extends Controller
 
     public function startSeleniumServer(Request $request){
 
-        $cmd = 'start /min cmd.exe @cmd /k "title SeleniumServer & cd .. & java -jar selenium-server-standalone-3.11.0.jar"';
+        $cmd = 'start /min cmd.exe @cmd /k "title SeleniumServer & cd .. & java -jar selenium-server-standalone-3.9.1.jar"';
         $fp= popen($cmd,'r');
         pclose($fp);
 
