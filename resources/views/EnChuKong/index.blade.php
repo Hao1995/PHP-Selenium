@@ -46,7 +46,7 @@
                     Status Data
                     <a class="btn btn-info float-right" href="{{route('EnChuKong.index')}}">Refresh</a>
                     @if ($status)
-                        <a class="btn btn-info float-right" href="{{route('crawler')}}" target="_blank">Fetch</a>
+                        <a class="btn btn-info float-right" href="{{route('crawler')}}">Fetch</a>
                     @endif
                 </th>
             </tr>

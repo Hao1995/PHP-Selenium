@@ -52,50 +52,67 @@ class FacebookSelenium
             $elements = $driver->findElements(WebDriverBy::partialLinkText($doctorName));
             $elements[$i]->click();
             
-            try {
-                $element = $driver->findElement(WebDriverBy::cssSelector('tr > td > table > tbody > tr:last-child > td:nth-child(1) > span'));
-                $date = $element->getText();
+            $eInfo = $driver->findElements(WebDriverBy::cssSelector('#TableSchedule > tbody > tr'));
+            
+            foreach ($eInfo as $info) {
+                try {
 
-                $element = $driver->findElement(WebDriverBy::cssSelector('tr > td > table > tbody > tr:last-child > td:nth-child(3) > span'));
-                $week = $element->getText();
+                    $eTd = $info->findElements(WebDriverBy::cssSelector('td'));
+                    if (count($eTd) != 9) {
+                        continue;
+                    }
 
-                $element = $driver->findElement(WebDriverBy::cssSelector('tr > td > table > tbody > tr:last-child > td:nth-child(6) > span'));
-                $doctor = $element->getText();
+                    $date = $eTd[0]->findElement(WebDriverBy::cssSelector('span'))->getText();
 
-                $element = $driver->findElement(WebDriverBy::cssSelector('tr > td > table > tbody > tr:last-child > td:nth-child(9) > input'));
-                $status = $element->getAttribute('value');
+                    $dateSplit = explode("/", $date);
+                    if (count($dateSplit) != 3){
+                        // the formate of data should like 2019/03/04
+                        continue;
+                    }
 
-                $dateSplit = explode("/", $date);
-                if (count($dateSplit) == 3){
-                    $year = (int)$dateSplit[0] + 1911;
+                    $week = $eTd[2]->findElement(WebDriverBy::cssSelector('span'))->getText();
+                    $doctor = $eTd[5]->findElement(WebDriverBy::cssSelector('span'))->getText();
+                    $status = $eTd[8]->findElement(WebDriverBy::cssSelector('input'))->getAttribute('value');
+
+                    $year = (int)$dateSplit[0] + 1911; // 轉換民國幾年至西元幾年
                     $dateFormat = (string)$year . '-' . $dateSplit[1] . '-' . $dateSplit[2];
-                }else{
-                    $date = null;
-                }
-                EnChuKong::create([
-                    'date'      => $dateFormat,
-                    'week'      => $week,
-                    'doctor'    => $doctor,
-                    'status'    => $status,
-                ])->save();
-    
-                if ($status == '我要預約'){
-                    $content = $date . ' - ' . $week . ' - ' . $status;
-                    makeAnAppointment($content, $driver);
-                }
-                $driver->navigate()->back();
+                    EnChuKong::create([
+                        'date'      => $dateFormat,
+                        'week'      => $week,
+                        'doctor'    => $doctor,
+                        'status'    => $status,
+                    ])->save();
+        
+                    // '我要預約', '額滿', '停止掛號'
+                    if ($status == '我要預約'){
+                        $content = $date . ' - ' . $week . ' - ' . $status;
+                        makeAnAppointment($content, $driver);
+                        try {
+                            $btn = $eTd[8]->findElement(WebDriverBy::cssSelector('input'));
+                            // $btn = $driver->findElement(WebDriverBy::cssSelector('tr > td > table > tbody > tr:last-child > td:nth-child(9) > input'));
+                            $btn->click();
+                            // ---
+                            // Not yet completed the reservation action
+                            // ---
+                        }catch(NoSuchElementException $e){
+                            $isExists = false;
+                        }
+                    }
+                    
+                    $driver->navigate()->back();
 
-            } catch (NoSuchElementException $e){
-                $errorMessage = $errorMessage . '   ===   ' .'Error when forech '. $i . ' element : No Such Element';
-                $driver->quit();
+                    break;
+
+                } catch (NoSuchElementException $e){
+                    $errorMessage = $errorMessage . '   ===   ' .'Error when forech '. $i . ' element : No Such Element';
+                    $driver->quit();
+                }
             }
-            //catch timeout
         }
 
         $driver->quit();
 
-        return 'Successful';
-
+        return;
     }
 }
 
@@ -117,15 +134,6 @@ function makeAnAppointment($content, $driver){
     Mail::send('emails.test', $data, function($message){
         $message->to($_ENV['MAIL_TARGET'], 'Harry')->subject('Selenium - En Chu Kong');
     });
-
-    try {
-        $btn = $driver->findElement(WebDriverBy::cssSelector('tr > td > table > tbody > tr:last-child > td:nth-child(9) > input'));
-        $btn->click();
-    }catch(NoSuchElementException $e){
-        $isExists = false;
-    }
-    
-    $driver->navigate()->back();
 }
 
 ?>

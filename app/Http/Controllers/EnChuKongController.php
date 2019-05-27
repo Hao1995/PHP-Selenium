@@ -136,6 +136,7 @@ class EnChuKongController extends Controller
 
     public function webdriver(Request $request){
         $haoWebdriver = new FacebookSelenium();
-        return $haoWebdriver->index();
+        $haoWebdriver->index();
+        return redirect('/EnChuKong');
     }
 }
